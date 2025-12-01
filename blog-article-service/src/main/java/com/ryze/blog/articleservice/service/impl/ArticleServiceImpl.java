@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +29,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Long createArticle(ArticleCreateRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication.getName() == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+        String username = authentication.getName();
         LocalDateTime now = LocalDateTime.now();
         Integer isPrivate = Boolean.TRUE.equals(request.getPrivateFlag()) ? 1 : 0;
 
@@ -37,7 +44,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .contentHtml(null)
                 .categoryId(request.getCategoryId())
                 .isPrivate(isPrivate)
-                .authorUsername("admin")
+                .authorUsername(username)
                 .viewCount(0L)
                 .likeCount(0L)
                 .status(1)
@@ -71,9 +78,6 @@ public class ArticleServiceImpl implements ArticleService {
         if (article == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found");
         }
-        if (Objects.equals(article.getIsPrivate(), 1)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Article is private");
-        }
         return toDetailVO(article);
     }
 
@@ -89,6 +93,26 @@ public class ArticleServiceImpl implements ArticleService {
             result.add(toSimpleVO(article));
         }
         return result;
+    }
+
+    @Override
+    public ArticleDetailVO getPrivateArticleById(Long id) {
+        Article article = articleMapper.selectById(id);
+        if (article == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found");
+        }
+        if (!Objects.equals(article.getIsPrivate(), 1)) {
+            return toDetailVO(article);
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication.getName() == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+        String username = authentication.getName();
+        if (!Objects.equals(username, article.getAuthorUsername())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
+        }
+        return toDetailVO(article);
     }
 
     private ArticleDetailVO toDetailVO(Article article) {

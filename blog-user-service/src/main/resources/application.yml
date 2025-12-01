@@ -18,5 +18,5 @@ mybatis-plus:
 
 app:
   jwt:
-    secret: "请改成一串很长的随机字符串"
+    secret: "ryze-blog-2025-super-long-secret-key-123456"
     expiration: 86400000

@@ -12,4 +12,6 @@ public interface ArticleService {
     ArticleDetailVO getPublicArticleById(Long id);
 
     List<ArticleSimpleVO> listPublicArticles();
+
+    ArticleDetailVO getPrivateArticleById(Long id);
 }

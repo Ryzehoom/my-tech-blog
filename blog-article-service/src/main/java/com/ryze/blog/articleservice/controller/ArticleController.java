@@ -34,4 +34,9 @@ public class ArticleController {
     public List<ArticleSimpleVO> listPublicArticles() {
         return articleService.listPublicArticles();
     }
+
+    @GetMapping("/private/{id}")
+    public ArticleDetailVO getPrivateArticle(@PathVariable Long id) {
+        return articleService.getPrivateArticleById(id);
+    }
 }
