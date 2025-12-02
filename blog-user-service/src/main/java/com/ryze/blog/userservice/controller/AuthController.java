@@ -45,6 +45,8 @@ public class AuthController {
                 .tokenType("Bearer")
                 .username(user.getUsername())
                 .nickname(user.getNickname())
+                .avatar(user.getAvatar())
+                .signature(user.getSignature())
                 .build();
     }
 
@@ -68,6 +70,8 @@ public class AuthController {
                 .id(user.getId())
                 .username(user.getUsername())
                 .nickname(user.getNickname())
+                .avatar(user.getAvatar())
+                .signature(user.getSignature())
                 .role(user.getRole())
                 .status(user.getStatus())
                 .build();

@@ -58,6 +58,8 @@ public class UserServiceImpl implements UserService {
                 .id(user.getId())
                 .username(user.getUsername())
                 .nickname(user.getNickname())
+                .avatar(user.getAvatar())
+                .signature(user.getSignature())
                 .role(user.getRole())
                 .status(user.getStatus())
                 .build();

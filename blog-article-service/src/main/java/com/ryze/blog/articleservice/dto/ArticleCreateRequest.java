@@ -10,5 +10,6 @@ public class ArticleCreateRequest {
     private String contentMd;
     private Long categoryId;
     private List<Long> tagIds;
+    private String coverImage;
     private Boolean privateFlag;
 }

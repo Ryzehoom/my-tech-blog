@@ -13,6 +13,8 @@ public class UserSimpleVO {
     private Long id;
     private String username;
     private String nickname;
+    private String avatar;
+    private String signature;
     private String role;
     private Integer status;
 }

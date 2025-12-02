@@ -17,5 +17,6 @@ public class ArticleSimpleVO {
     private Long categoryId;
     private Integer isPrivate;
     private String authorUsername;
+    private String coverImage;
     private LocalDateTime publishTime;
 }

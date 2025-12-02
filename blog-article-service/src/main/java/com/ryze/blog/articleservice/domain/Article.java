@@ -45,6 +45,12 @@ public class Article {
     @TableField("like_count")
     private Long likeCount;
 
+    @TableField("wow_count")
+    private Long wowCount;
+
+    @TableField("cover_image")
+    private String coverImage;
+
     private Integer status;
 
     @TableField("publish_time")

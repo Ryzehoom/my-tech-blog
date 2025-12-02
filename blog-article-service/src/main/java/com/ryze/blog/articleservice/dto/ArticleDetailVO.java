@@ -21,6 +21,8 @@ public class ArticleDetailVO {
     private String authorUsername;
     private Long viewCount;
     private Long likeCount;
+    private Long wowCount;
+    private String coverImage;
     private Integer status;
     private LocalDateTime publishTime;
 }

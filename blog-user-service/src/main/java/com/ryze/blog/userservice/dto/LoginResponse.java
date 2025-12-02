@@ -14,4 +14,6 @@ public class LoginResponse {
     private String tokenType;
     private String username;
     private String nickname;
+    private String avatar;
+    private String signature;
 }

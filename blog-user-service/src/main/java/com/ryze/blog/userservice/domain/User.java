@@ -26,6 +26,10 @@ public class User {
 
     private String nickname;
 
+    private String avatar;
+
+    private String signature;
+
     private String role;
 
     private Integer status;

@@ -1,30 +1,43 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
-    <div v-if="loading" class="text-center text-gray-400 py-12">
-      Loading article...
-    </div>
-    
-    <div v-else-if="error" class="text-center text-red-400 py-12">
-      {{ error }}
-    </div>
-    
-    <article v-else-if="article" class="max-w-4xl mx-auto">
-      <GlassCard class="p-8 md:p-12">
-        <h1 class="text-3xl md:text-4xl font-bold text-white mb-6">{{ article.title }}</h1>
+  <div class="bg-white min-h-screen">
+    <div class="max-w-[677px] mx-auto px-4 py-8 md:py-12">
+      <div v-if="loading" class="text-center text-gray-400 py-12">
+        Loading article...
+      </div>
+      
+      <div v-else-if="error" class="text-center text-red-400 py-12">
+        {{ error }}
+      </div>
+      
+      <article v-else-if="article" class="font-sans">
+        <h1 class="text-[22px] md:text-[24px] font-bold text-[#333] leading-[1.4] mb-4 tracking-wide">
+          {{ article.title }}
+        </h1>
         
-        <div class="flex items-center space-x-4 text-sm text-gray-400 mb-8 pb-8 border-b border-white/10">
+        <div class="flex items-center space-x-4 text-[15px] text-[rgba(0,0,0,0.3)] mb-8">
+          <span class="text-[#576b95] font-medium cursor-pointer">My Tech Blog</span>
+          <span v-if="article.authorName">{{ article.authorName }}</span>
           <span>{{ formatDate(article.createTime) }}</span>
-          <span v-if="article.authorName">By {{ article.authorName }}</span>
         </div>
         
-        <div class="prose prose-invert prose-lg max-w-none">
-          <!-- In a real app, use a markdown renderer here -->
-          <div class="whitespace-pre-wrap font-sans text-gray-200 leading-relaxed">
+        <!-- Cover Image (Optional, if we had one) -->
+        <!-- <img v-if="article.cover" :src="article.cover" class="w-full rounded-lg mb-8" /> -->
+
+        <div class="prose prose-lg max-w-none">
+          <div class="whitespace-pre-wrap text-[17px] text-[#333] leading-[1.6] tracking-wide text-justify break-words">
             {{ article.content }}
           </div>
         </div>
-      </GlassCard>
-    </article>
+        
+        <div class="mt-12 pt-8 border-t border-gray-100 text-[14px] text-gray-400 flex justify-between items-center">
+          <span>Views 100k+</span>
+          <div class="flex space-x-4">
+             <span>Like {{ article.likeCount || 0 }}</span>
+             <span>Wow {{ article.wowCount || 0 }}</span>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </template>
 
@@ -33,7 +46,6 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { fetchArticleDetailPublic, fetchArticleDetailPrivate } from '../api/article';
 import { useAuthStore } from '../stores/auth';
-import GlassCard from '../components/common/GlassCard.vue';
 
 const route = useRoute();
 const authStore = useAuthStore();

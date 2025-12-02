@@ -47,6 +47,8 @@ public class ArticleServiceImpl implements ArticleService {
                 .authorUsername(username)
                 .viewCount(0L)
                 .likeCount(0L)
+                .wowCount(0L)
+                .coverImage(request.getCoverImage())
                 .status(1)
                 .publishTime(now)
                 .createdAt(now)
@@ -127,6 +129,8 @@ public class ArticleServiceImpl implements ArticleService {
                 .authorUsername(article.getAuthorUsername())
                 .viewCount(article.getViewCount())
                 .likeCount(article.getLikeCount())
+                .wowCount(article.getWowCount())
+                .coverImage(article.getCoverImage())
                 .status(article.getStatus())
                 .publishTime(article.getPublishTime())
                 .build();
@@ -140,6 +144,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .categoryId(article.getCategoryId())
                 .isPrivate(article.getIsPrivate())
                 .authorUsername(article.getAuthorUsername())
+                .coverImage(article.getCoverImage())
                 .publishTime(article.getPublishTime())
                 .build();
     }
